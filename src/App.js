@@ -1,21 +1,26 @@
-import React from 'react';
-import Dashboard from './components/Dashboard';
-import Header from './components/layout/Header';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import './App.css';
+import React, { useReducer, useEffect } from 'react';
+import AppRouter from './routers/AppRouter'
+import { AuthContext } from './auth/AuthContext';
+import { authReducer } from './auth/authReducer';
 
-const App = () =>
-     (
-      <div className="App">
-        <Header />        
-        <h1>[ink]Store  App</h1>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>            
-          </Switch>
-        </BrowserRouter>
-      </div>
+const init = () => { 
+    return (JSON.parse(localStorage.getItem('user')) || 
+            {logged : false}
     )
-  export default App;
+}
+
+const App = () => {
+
+  const [user, dispatch] = useReducer(authReducer, {}, init);
+  
+  useEffect(() => {
+    localStorage.setItem( 'user', JSON.stringify(user));  
+  }, [user])
+
+  return (
+    <AuthContext.Provider value={{user, dispatch}}>
+      <AppRouter />
+    </AuthContext.Provider>
+  )
+}
+export default App;

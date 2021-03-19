@@ -32,8 +32,7 @@ const ItemsTable = () => {
 
   return (
     <div>
-      <h1>[ink] Items</h1>
-      <div style={{ height: 600, width: '100%', padding: '10px' }}>
+      <div style={{ height: 600, width: '100%', padding: 100}}>
         <DataGrid rows={items} columns={columns} />
         <Button onClick={handleRemove}>Remove</Button>
         <Button onClick={handleAdd}>Add</Button>
