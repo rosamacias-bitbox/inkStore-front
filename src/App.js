@@ -1,26 +1,11 @@
-import React, { useReducer, useEffect } from 'react';
 import AppRouter from './routers/AppRouter'
-import { AuthContext } from './auth/AuthContext';
-import { authReducer } from './auth/authReducer';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
-const init = () => { 
-    return (JSON.parse(localStorage.getItem('user')) || 
-            {logged : false}
-    )
-}
-
-const App = () => {
-
-  const [user, dispatch] = useReducer(authReducer, {}, init);
-  
-  useEffect(() => {
-    localStorage.setItem( 'user', JSON.stringify(user));  
-  }, [user])
-
+export const App = () => {
   return (
-    <AuthContext.Provider value={{user, dispatch}}>
+    <Provider store={ store }>
       <AppRouter />
-    </AuthContext.Provider>
+    </Provider>
   )
 }
-export default App;

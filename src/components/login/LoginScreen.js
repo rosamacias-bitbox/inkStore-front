@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -9,24 +8,28 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { AuthContext } from '../../auth/AuthContext';
-import { types } from '../../types/types';
 
+import { makeStyles } from '@material-ui/core/styles';
+import { useForm } from '../../hooks/useForm';
+import { useDispatch } from 'react-redux';
+import { loginWithEmailPassword} from '../../actions/auth';
 
-const LoginScreen = ({ history }) => {
+const LoginScreen = () => {
 
-    const { dispatch } = useContext(AuthContext);
-    const handleLogin = () => {
-        dispatch({
-            type: types.login,
-            payload: {
-                name: 'rosa'
-            }
-        })
-        history.replace('/');
-    };
+    const  dispatch = useDispatch();
+
+    const [ formValues, handleInputChange ] = useForm({
+        email: 'rosmacias@gmail.com',
+        password: '123456'
+    });
+
+    const { email, password } = formValues;
+    
+    const handleLogin = (e) => {
+        e.preventDefault();
+        dispatch( loginWithEmailPassword( email, password)  );
+    }
 
     const classes = useStyles();
 
@@ -36,10 +39,8 @@ const LoginScreen = ({ history }) => {
 
             <CssBaseline />
             <div className={classes.paper}>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <form className={classes.form} noValidate onSubmit={handleLogin} >
+                <Typography component="h1" variant="h5">Sign in </Typography>
+                <form className={classes.form} onSubmit={handleLogin} >
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -50,6 +51,8 @@ const LoginScreen = ({ history }) => {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        value= { email }
+                        onChange= { handleInputChange }
                     />
                     <TextField
                         variant="outlined"
@@ -61,6 +64,8 @@ const LoginScreen = ({ history }) => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value= { password }
+                        onChange= { handleInputChange }
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
@@ -72,7 +77,6 @@ const LoginScreen = ({ history }) => {
                         variant="contained"
                         //color="primary"
                         className={classes.submit}
-                        onClick={handleLogin}
                     >
                         Log In
                     </Button>

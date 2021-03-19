@@ -1,20 +1,12 @@
-import React, { useContext } from 'react'
-import { NavLink, Link, useHistory } from 'react-router-dom';
-import { AuthContext } from '../../auth/AuthContext';
+import React from 'react'
+import { NavLink, Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import { types } from '../../types/types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const NavBar = (props) => {
-
-    const { user:{name}, dispatch } = useContext( AuthContext );    
-    const history = useHistory();
-
+    
     const handleLogout = () => {
-        history.replace('/login');
-       dispatch({
-           type : types.logout,             
-       })
+    
     };
 
     return (
@@ -26,7 +18,7 @@ const NavBar = (props) => {
                 </div>
 
                 <div className="navbar-nav navbar-right">
-                    <span className="nav-item nav-link text-info"> {name}</span>
+                    <span className="nav-item nav-link text-info"> {/*name*/}</span>
                     <Button activeClassName="active"  className="nav-item nav-link btn" onClick={handleLogout}> Logout</Button>
                 </div>
             </div>
