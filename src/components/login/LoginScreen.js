@@ -21,13 +21,13 @@ const LoginScreen = () => {
 
     const [ formValues, handleInputChange ] = useForm({
         email: 'rosmacias@gmail.com',
-        password: '123456'
+        password: '123rosa456'
     });
 
     const { email, password } = formValues;
     
     const handleLogin = (e) => {
-        e.preventDefault();
+        e.preventDefault();        
         dispatch( loginWithEmailPassword( email, password)  );
     }
 

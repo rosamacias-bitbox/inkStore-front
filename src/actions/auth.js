@@ -1,18 +1,27 @@
+import { fetchWithoutToken } from '../helpers/fetch';
 import { types } from '../types/types';
 
-export const loginWithEmailPassword = (email, password) =>{
-    return ( dispatch ) => {
+export const loginWithEmailPassword = (email, password) => {
+    return async ( dispatch  ) => {
+       
+        const resp = await fetchWithoutToken( 'login', {email, password}, 'POST' );
+        const body = await resp.json();
+        console.log( body );
 
-        setTimeout(() => {
-            dispatch( login( email, password));
-        }, 3000);
+        if ( body.ok ) {
+            localStorage.setItem('token', body.token);
+            localStorage.setItem('token-init-date', new Date().getTime());
+        
+            dispatch( login( {
+                uid: body.uid,
+                name: body.name
+            }))
+        }
     }
 }
 
-export const login = (uid, displayName) => ({    
-        type : types.login,
-        payload : {
-            uid,
-            displayName
-        }
-    })
+const login = ( user ) => ({
+    type : types.login,
+    payload: user
+})
+

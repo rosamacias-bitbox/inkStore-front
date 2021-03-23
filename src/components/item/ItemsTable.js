@@ -1,7 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
 import { useFetchItem } from '../../hooks/useFetchItem';
+import { ItemsModal } from './ItemsModal';
+import { uiOpenModal, uiCloseModal } from '../../actions/ui';
+import { eventSetItemActive } from '../../actions/events';
+import { AddNewFab } from '../ui/AddNewFab';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -21,23 +26,36 @@ const ItemsTable = () => {
   console.log(items);
   console.log(loading);
 
+  const dispatch = useDispatch();
 
-  const handleAdd = () => {
-    // setItems(items => [...items, { id: 3, name: 'Rupert', code: '365',   price: 35 }])
+  const handleAdd = () => {    
+    dispatch( uiOpenModal() );
   };
 
   const handleRemove = () => {
-      //;
+    dispatch( uiCloseModal() );
   };
+
+  const handleOnRowClick = (e) => {
+    handleAdd();
+    dispatch( eventSetItemActive( e));
+  }
 
   return (
     <div>
       <div style={{ height: 600, width: '100%', padding: 100}}>
-        <DataGrid rows={items} columns={columns} />
+        <DataGrid 
+          rows={items} 
+          columns={columns} 
+          onRowClick={handleOnRowClick}
+          />
         <Button onClick={handleRemove}>Remove</Button>
-        <Button onClick={handleAdd}>Add</Button>
-        {loading && <p>loading</p> }
+        <Button onClick={handleAdd}>Add</Button>        
       </div>
+     
+      <ItemsModal/>
+      <AddNewFab/>
+     
     </div>
   );
 }
