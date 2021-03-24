@@ -6,7 +6,7 @@ export const useFetchItem = () => {
 
     const [state, setState] = useState({
         data: [],
-        loading: true,
+        itemsLoading: true,
     });
 
     useEffect(() => {
@@ -14,7 +14,7 @@ export const useFetchItem = () => {
             .then(items => setState(
                 {
                     data : items,
-                    loading: false
+                    itemsLoading: false
                 }
             ))
     }, [])

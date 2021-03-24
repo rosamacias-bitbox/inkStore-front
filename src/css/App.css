@@ -23,6 +23,6 @@
       bottom: 25px;
       font-size: 30px;
       padding: 25px;
-      position: fix;
+      position: absolute;
       right: 25px;
   }

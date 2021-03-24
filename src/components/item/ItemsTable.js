@@ -1,8 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
 import { useFetchItem } from '../../hooks/useFetchItem';
+import { useFetchSuppliers} from '../../hooks/useFetchSuppliers';
 import { ItemsModal } from './ItemsModal';
 import { uiOpenModal, uiCloseModal } from '../../actions/ui';
 import { eventSetItemActive } from '../../actions/events';
@@ -22,11 +23,11 @@ const columns = [
 
 const ItemsTable = () => {
 
-  const {data:items, loading} = useFetchItem();
-  console.log(items);
-  console.log(loading);
+  const {data:items, itemsLoading} = useFetchItem();
+  const {data:suppliers, suppliersLoading} = useFetchSuppliers();
 
   const dispatch = useDispatch();
+  const { events } = useSelector( state => state.warehouse );
 
   const handleAdd = () => {    
     dispatch( uiOpenModal() );
@@ -36,9 +37,13 @@ const ItemsTable = () => {
     dispatch( uiCloseModal() );
   };
 
-  const handleOnRowClick = (e) => {
-    handleAdd();
-    dispatch( eventSetItemActive( e));
+  const handleOnRowClick = (e) => {  
+    //console.log(e.row);    
+  }
+
+  const handleOnRowDoubleClick = (e) => {  
+    dispatch( eventSetItemActive(e.row));
+    dispatch( uiOpenModal() );
   }
 
   return (
@@ -48,14 +53,13 @@ const ItemsTable = () => {
           rows={items} 
           columns={columns} 
           onRowClick={handleOnRowClick}
+          onRowDoubleClick={handleOnRowDoubleClick}
           />
         <Button onClick={handleRemove}>Remove</Button>
         <Button onClick={handleAdd}>Add</Button>        
       </div>
      
-      <ItemsModal/>
-      <AddNewFab/>
-     
+      <ItemsModal/>     
     </div>
   );
 }

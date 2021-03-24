@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
+import { eventAddNewItem, eventClearActiveEvent } from '../../actions/events';
+
 
 const customStyles = {
     content: {
@@ -21,13 +23,17 @@ Modal.setAppElement('#root')
 
 export const ItemsModal = () => {
 
-    const { modalOpen } = useSelector ( state => state.ui);
+    const { modalOpen } = useSelector ( state => state.ui );
+    const { activeEvent } = useSelector ( state => state.warehouse );
+
     const dispatch = useDispatch();
 
     const closeModal = () => {      
         dispatch( uiCloseModal() );
-    }
+        dispatch( eventClearActiveEvent() );
 
+        //todo - create new item -- setFormValues(initEvent)
+    }
 
     const [formValues , setFormValues] = useState({
         name :  '',
@@ -39,6 +45,13 @@ export const ItemsModal = () => {
 
     const {name, code, price, state, description } = formValues;
 
+    useEffect(() => {        
+        console.log( activeEvent)
+        if (activeEvent){
+            setFormValues(activeEvent);
+        }
+    }, [activeEvent]);
+
     const handleInputChange = ({ target }) => {
         setFormValues({
             ...formValues,
@@ -49,6 +62,9 @@ export const ItemsModal = () => {
     const handleSubmitForm = (e) => {
         e.preventDefault();
         console.log(formValues);
+        dispatch( eventAddNewItem({
+            ...formValues
+        }));
     }
 
     return (
@@ -59,7 +75,7 @@ export const ItemsModal = () => {
             onRequestClose={closeModal}
             style={customStyles}
         >
-            <h1> New Item </h1>
+            <h1> Item </h1>
             <hr />
             <form className="container" onSubmit={handleSubmitForm}>
 

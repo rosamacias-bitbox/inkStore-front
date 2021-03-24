@@ -1,7 +1,7 @@
 import { types } from "../types/types";
 
 const initialState = {
-    event: [
+    events: [
 
     ],
     activeEvent : null
@@ -12,8 +12,21 @@ export const warehouseReducer = ( state = initialState, action ) =>{
         case types.eventSetItemActive:
             return {
                 ...state,
-                activeEvent : action.payload
+                activeEvent : action.payload                
             }
+        case types.eventAddNewItem:
+            return {
+                ...state,
+                events: [
+                    ...state.events,
+                    action.payload
+                ]
+            }
+        case types.eventClearActiveEvent:
+            return {
+                ...state,
+                activeEvent : null
+            }    
         default:
             return state;
     }

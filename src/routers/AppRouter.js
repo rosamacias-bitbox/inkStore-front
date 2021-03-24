@@ -16,7 +16,7 @@ export const AppRouter = () => {
             <BrowserRouter>
                 <NavBar />
                 <Switch>
-                    <Route exact path="/login"  component={LoginScreen}/>                    
+                    <Route path="/login"  component={LoginScreen}/>                    
                     <Route path="/" component={DashboardRouter}/>                    
                 </Switch>
             </BrowserRouter>
