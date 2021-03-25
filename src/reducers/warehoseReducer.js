@@ -1,31 +1,43 @@
 import { types } from "../types/types";
 
 const initialState = {
-    events: [
+    items: [
 
     ],
-    activeEvent : null
+    activeItem : null
 };
 
 export const warehouseReducer = ( state = initialState, action ) =>{
     switch (action.type) {
-        case types.eventSetItemActive:
+        case types.itemSetActive:
             return {
                 ...state,
-                activeEvent : action.payload                
+                activeItem : action.payload                
             }
-        case types.eventAddNewItem:
+        case types.itemAddNew:
             return {
                 ...state,
-                events: [
-                    ...state.events,
+                items: [
+                    ...state.items,
                     action.payload
                 ]
             }
-        case types.eventClearActiveEvent:
+        case types.itemClearActive:
             return {
                 ...state,
-                activeEvent : null
+                activeItem : null
+            }    
+        case types.itemUpdated:
+            return {
+                ...state,
+                items: state.items.map(
+                    e => ( e.id === action.payload.id) ? action.payload : e
+                )
+            }
+        case types.itemsSet:
+            return {
+                ...state,
+                items: action.payload                
             }    
         default:
             return state;

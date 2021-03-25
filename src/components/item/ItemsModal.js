@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventAddNewItem, eventClearActiveEvent } from '../../actions/events';
+import { itemAddNew, itemClearActive, itemUpdated } from '../../actions/items';
 
 
 const customStyles = {
@@ -15,42 +15,44 @@ const customStyles = {
         transform: 'translate(-50%, -50%)',
         backgroundColor: "#fff",
         width: 500,
-        height: 750,
+        height: 800,
     }
 };
 
 Modal.setAppElement('#root')
 
+const initItem = {
+    id   :  '',
+    name :  '',
+    code :  '',
+    price : '',
+    state : '',
+    description : ''
+}
+
 export const ItemsModal = () => {
 
     const { modalOpen } = useSelector ( state => state.ui );
-    const { activeEvent } = useSelector ( state => state.warehouse );
+    const { activeItem } = useSelector ( state => state.warehouse );
 
     const dispatch = useDispatch();
 
+    const [formValues , setFormValues] = useState(initItem);
+
+    const {id, name, code, price, state, description } = formValues;
+
     const closeModal = () => {      
         dispatch( uiCloseModal() );
-        dispatch( eventClearActiveEvent() );
-
-        //todo - create new item -- setFormValues(initEvent)
+        dispatch( itemClearActive() );        
+        setFormValues(initItem)
     }
 
-    const [formValues , setFormValues] = useState({
-        name :  '',
-        code :  '',
-        price : '',
-        state : '',
-        description : ''
-    });
-
-    const {name, code, price, state, description } = formValues;
-
     useEffect(() => {        
-        console.log( activeEvent)
-        if (activeEvent){
-            setFormValues(activeEvent);
+        console.log( activeItem)
+        if (activeItem){
+            setFormValues(activeItem);
         }
-    }, [activeEvent]);
+    }, [activeItem]);
 
     const handleInputChange = ({ target }) => {
         setFormValues({
@@ -61,25 +63,35 @@ export const ItemsModal = () => {
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
-        console.log(formValues);
-        dispatch( eventAddNewItem({
-            ...formValues
-        }));
+
+        if (activeItem){
+            dispatch( itemUpdated( formValues ))
+        }
+        else{
+            dispatch( itemAddNew({
+                ...formValues
+            }));
+        }
+        closeModal();
     }
 
     return (
         <Modal
             isOpen={modalOpen}
-            //onAfterOpen={afterOpenModal}
             closeTimeoutMS={200}
             onRequestClose={closeModal}
             style={customStyles}
         >
             <h1> Item </h1>
             <hr />
-            <form className="container" onSubmit={handleSubmitForm}>
 
+            <form className="container" onSubmit={handleSubmitForm}>
                 <div className="form-group">
+                    <label>Id</label>
+                    <input className="form-control" placeholder="id" name="id" value={id} onChange={ handleInputChange} />
+                </div>
+
+                <div className="form-group">                    
                     <label>Name</label>
                     <input className="form-control" placeholder="name" name="name" value={name} onChange={ handleInputChange} />
                 </div>
