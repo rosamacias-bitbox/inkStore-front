@@ -1,8 +1,20 @@
 import { types } from "../types/types";
-import { fetchWithToken } from '../helpers/fetch';
+import { fetchWithoutToken, fetchWithToken } from '../helpers/fetch';
 
+export const itemStartAddNew = (item) => {
+    return async ( dispatch ) => {
+        console.log(item);
+        const resp = await fetchWithoutToken('api/items/save', item, 'POST');
+        const body = await resp.json();
+        
+        if (resp.ok)
+        {
+            dispatch( itemAddNew(item));
+        }
+    }
+}
 
-export const itemAddNew = (item) => ({
+const itemAddNew = (item) => ({
     type: types.itemAddNew,
     payload: item
 });
@@ -14,7 +26,20 @@ export const itemSetActive = (item) => ({
 
 export const itemClearActive = () => ({ type: types.itemClearActive });
 
-export const itemUpdated = (item) => ({
+export const itemStartUpdate = (item) => {
+    return async ( dispatch ) => {
+        const resp = await fetchWithoutToken('api/items/update', item, 'POST');
+        const body = await resp.json();
+        console.log(body);
+
+        if (resp.ok)
+        {
+            dispatch( itemUpdated(item));
+        }
+    }
+}
+
+ const itemUpdated = (item) => ({
     type: types.itemUpdated,
     payload: item
 });
@@ -22,7 +47,6 @@ export const itemUpdated = (item) => ({
 
 
 export const itemDeleted = (item) => ({ type: types.itemDeleted });
-
 
 export const itemsFindAll = () => {
     return async (dispatch) => {

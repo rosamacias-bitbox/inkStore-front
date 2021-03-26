@@ -25,8 +25,6 @@ const ItemsScreen = () => {
   useFetchItems(dispatch);
   const { items } = useSelector ( state => state.warehouse );
 
-  
-
   const handleAdd = () => {    
     dispatch( uiOpenModal() );
   };

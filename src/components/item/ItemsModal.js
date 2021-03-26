@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { itemAddNew, itemClearActive, itemUpdated } from '../../actions/items';
+import { itemClearActive, itemStartAddNew, itemStartUpdate} from '../../actions/items';
 
 const customStyles = {
     content: {
@@ -63,12 +63,10 @@ export const ItemsModal = () => {
         e.preventDefault();
 
         if (activeItem){
-            dispatch( itemUpdated( formValues ))
+            dispatch( itemStartUpdate( formValues ));
         }
         else{
-            dispatch( itemAddNew({
-                ...formValues
-            }));
+            dispatch( itemStartAddNew (formValues ));
         }
         closeModal();
     }
@@ -85,8 +83,8 @@ export const ItemsModal = () => {
 
             <form className="container" onSubmit={handleSubmitForm}>
                 <div className="form-group">
-                    <label>Id</label>
-                    <input className="form-control" placeholder="id" name="id" value={id} onChange={ handleInputChange} />
+                    <label>Id</label>                    
+                    <input readOnly = {true} className="form-control" placeholder="" name="id" value={id} />
                 </div>
 
                 <div className="form-group">                    
