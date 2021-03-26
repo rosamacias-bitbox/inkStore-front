@@ -10,7 +10,7 @@ export const useFetchSuppliers = (dispatch) => {
 
     useEffect(() => {
         dispatch( suppliersFindAll());
-    }, [])
+    }, [dispatch])
 
     return state;
 };

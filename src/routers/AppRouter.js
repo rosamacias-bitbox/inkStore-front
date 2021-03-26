@@ -1,6 +1,6 @@
 
 import NavBar from '../components/ui/NavBar';
-import { BrowserRouter, Route,  Switch } from 'react-router-dom';
+import { BrowserRouter,  Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { PrivateRoute } from './PrivateRoute';

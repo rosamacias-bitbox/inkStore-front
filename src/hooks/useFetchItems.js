@@ -11,7 +11,7 @@ export const useFetchItems = (dispatch) => {
 
     useEffect(() => {
         dispatch( itemsFindAll());
-    }, [])
+    }, [dispatch])
 
     return state;
 };

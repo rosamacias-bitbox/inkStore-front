@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
-import { logout } from '../../actions/auth';
+import { startLogout } from '../../actions/auth';
 import Button from '@material-ui/core/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,7 +12,7 @@ const NavBar = (props) => {
 
     const handleLogout = () => {
         if (logged)
-            dispatch( logout() );    
+            dispatch( startLogout() );    
     };
 
     return (

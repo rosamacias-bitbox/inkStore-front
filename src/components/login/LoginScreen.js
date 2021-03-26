@@ -20,8 +20,8 @@ const LoginScreen = () => {
     const  dispatch = useDispatch();
 
     const [ formValues, handleInputChange ] = useForm({
-        username: 'user1',
-        password: 'user1'
+        username: 'rosa',
+        password: 'rosa'
     });
 
     const { username, password } = formValues;

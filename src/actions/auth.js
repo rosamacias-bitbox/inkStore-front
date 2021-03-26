@@ -6,8 +6,11 @@ export const loginWithEmailPassword = (username, password) => {
        
         const resp = await fetchWithoutToken( 'signin', {username, password}, 'POST' );
         const body = await resp.json();
+        console.log('RESP: ', resp);
+        console.log('BODY: ', body);
+    
 
-        if ( body.jwt ) {
+        if ( resp.ok ) {
             localStorage.setItem('token', body.jwt);
             localStorage.setItem('token-init-date', new Date().getTime());
         
@@ -24,5 +27,11 @@ const login = ( user ) => ({
     payload: user
 });
 
+export const startLogout = () => {
+    return (dispatch) => {
+        localStorage.clear();
+        dispatch(logout());
+    }
+ }
 export const logout = () =>({ type : types.logout });
  
