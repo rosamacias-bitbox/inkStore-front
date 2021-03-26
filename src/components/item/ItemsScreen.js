@@ -1,10 +1,8 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFetchItem } from '../../hooks/useFetchItem';
-import { useFetchSuppliers} from '../../hooks/useFetchSuppliers';
+import { useFetchItems } from '../../hooks/useFetchItems';
 import { ItemsModal } from './ItemsModal';
 import { uiOpenModal, uiCloseModal } from '../../actions/ui';
-import { itemSetActive, itemsSet } from '../../actions/items';
+import { itemSetActive, itemDeleted } from '../../actions/items';
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
 
@@ -20,29 +18,27 @@ const columns = [
 ];
 
 
-const ItemsTable = () => {
-
-  const {data, itemsLoading} = useFetchItem();
-  const {data:suppliers, suppliersLoading} = useFetchSuppliers();
-
+const ItemsScreen = () => {
 
   const dispatch = useDispatch();
+  
+  useFetchItems(dispatch);
+  const { items } = useSelector ( state => state.warehouse );
 
-  const {payload:items} =  dispatch( itemsSet(data));
-
-  //console.log(data);
-  console.log(items);
+  
 
   const handleAdd = () => {    
     dispatch( uiOpenModal() );
   };
 
-  const handleRemove = () => {
+  const handleDelete = () => {
+
+    dispatch( itemDeleted());
     dispatch( uiCloseModal() );
   };
 
   const handleOnRowClick = (e) => {  
-    //console.log(e.row);    
+    dispatch( itemSetActive(e.row));
   }
 
   const handleOnRowDoubleClick = (e) => {  
@@ -56,16 +52,18 @@ const ItemsTable = () => {
         <DataGrid 
           rows={items} 
           columns={columns} 
-          onRowClick={handleOnRowClick}
+          onRowClick={handleOnRowClick}          
           onRowDoubleClick={handleOnRowDoubleClick}
           />
-        <Button onClick={handleRemove}>Remove</Button>
+        
+        <Button onClick={handleDelete}>Delete</Button>      
         <Button onClick={handleAdd}>Add</Button>        
+        
       </div>
-     
+    
       <ItemsModal/>     
     </div>
   );
 }
 
-export default ItemsTable;
+export default ItemsScreen;

@@ -1,13 +1,11 @@
 import React from 'react'
-import ItemsTable from './item/ItemsTable'
-
-
+import ItemsScreen from './item/ItemsScreen'
 
 const Dashboard = () => {
 
     return (
         <div>           
-            <ItemsTable />
+            <ItemsScreen />           
         </div>
     );
 

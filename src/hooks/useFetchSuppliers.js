@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { getFetchSuppliers } from '../helpers/getFetchSuppliers';
+import { suppliersFindAll } from '../actions/suppliers';
 
-export const useFetchSuppliers = () => {
+export const useFetchSuppliers = (dispatch) => {
 
     const [state, setState] = useState({
         data: [],
@@ -9,13 +9,7 @@ export const useFetchSuppliers = () => {
     });
 
     useEffect(() => {
-        getFetchSuppliers()
-            .then(suppliers => setState(
-                {
-                    data : suppliers,
-                    suppliersLoading: false
-                }
-            ))
+        dispatch( suppliersFindAll());
     }, [])
 
     return state;

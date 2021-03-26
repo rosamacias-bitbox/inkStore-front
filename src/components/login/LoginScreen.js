@@ -20,15 +20,15 @@ const LoginScreen = () => {
     const  dispatch = useDispatch();
 
     const [ formValues, handleInputChange ] = useForm({
-        email: 'user1',
+        username: 'user1',
         password: 'user1'
     });
 
-    const { email, password } = formValues;
+    const { username, password } = formValues;
     
     const handleLogin = (e) => {
         e.preventDefault();        
-        dispatch( loginWithEmailPassword( email, password)  );
+        dispatch(loginWithEmailPassword( username, password)  );
     }
 
     const classes = useStyles();
@@ -46,12 +46,12 @@ const LoginScreen = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
+                        id="username"
+                        label="Username"
+                        name="usename"
+                        autoComplete="username"
                         autoFocus
-                        value= { email }
+                        value= { username }
                         onChange= { handleInputChange }
                     />
                     <TextField

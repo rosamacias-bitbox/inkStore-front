@@ -6,10 +6,13 @@ export const types = {
     uiOpenModal  : '[ui] Open modal',
     uiCloseModal : '[ui] Close modal',
 
-
     itemSetActive   : '[item] Set Active',
     itemAddNew      : '[item] Add new',
     itemClearActive : '[item] Clear Active ',
     itemUpdated     : '[item] Updated',
-    itemsSet        : '[item] Set List '
+    itemsSet        : '[item] Set List',
+    itemDeleted     : '[item] Delete',
+    itemsFindAll    : '[item] FindAll',
+
+    suppliersFindAll : '[suppliers] Find All'
 }

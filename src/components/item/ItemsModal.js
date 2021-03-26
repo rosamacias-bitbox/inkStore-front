@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
 import { itemAddNew, itemClearActive, itemUpdated } from '../../actions/items';
 
-
 const customStyles = {
     content: {
         top: '50%',
@@ -48,7 +47,6 @@ export const ItemsModal = () => {
     }
 
     useEffect(() => {        
-        console.log( activeItem)
         if (activeItem){
             setFormValues(activeItem);
         }
@@ -106,7 +104,7 @@ export const ItemsModal = () => {
                     <input className="form-control" placeholder="price" name="price" value={price} onChange= {handleInputChange}/>
                 </div>
 
-                <div className="form-group">
+                <div className="form-group">                    
                     <label>State</label>
                     <input className="form-control" placeholder="state"   name="state" value={state} onChange= {handleInputChange} />
                 </div>
