@@ -25,6 +25,7 @@ const ItemsScreen = () => {
   useFetchItems(dispatch);
   const { items } = useSelector ( state => state.warehouse );
 
+
   const handleAdd = () => {    
     dispatch( uiOpenModal() );
   };
@@ -55,8 +56,7 @@ const ItemsScreen = () => {
           />
         
         <Button onClick={handleDelete}>Delete</Button>      
-        <Button onClick={handleAdd}>Add</Button>        
-        
+        <Button onClick={handleAdd}>Add</Button>                
       </div>
     
       <ItemsModal/>     

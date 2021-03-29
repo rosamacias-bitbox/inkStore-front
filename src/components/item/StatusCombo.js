@@ -1,32 +1,49 @@
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
 
 
+export const StatusCombo = () => {
+  
+  const [status, setStatus] = React.useState('');
+  const [open, setOpen] = React.useState(false);
 
-export const StatusCombo = (state) => {
+  const handleChange = (event) => {
+    setStatus(event.target.value);
+  };
 
-    const handleChange = (event) => {
-        
-      };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    return (
-        <FormControl>
-        <InputLabel> State</InputLabel>
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  return (
+    <div>
+      
+      <FormControl >
+        <InputLabel id="demo-controlled-open-select-label">Status</InputLabel>
         <Select
-          native
-          value={state}
+          labelId="demo-controlled-open-select-label"
+          id="demo-controlled-open-select"
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={status}
           onChange={handleChange}
-          label="State"
-          inputProps={{
-            name: 'state',
-            //id: 'outlined-age-native-simple',
-          }}
-        >
-          <option value={0}>AVAILABLE</option>
-          <option value={1}>DISCONTINUED</option>
+          
+        >        
+          <MenuItem value={0}>AVAILABLE</MenuItem>
+          <MenuItem value={1}>DISCONTINUED</MenuItem>
+          
         </Select>
       </FormControl>
-    );
-
+    </div>
+  );
 }

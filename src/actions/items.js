@@ -7,6 +7,8 @@ export const itemStartAddNew = (item) => {
         const resp = await fetchWithoutToken('api/items/save', item, 'POST');
         const body = await resp.json();
         
+        console.log('USER:',  item.user);
+        
         if (resp.ok)
         {
             dispatch( itemAddNew(item));
